@@ -184,6 +184,12 @@ const opcodes: OpcodeList = createOpcodes({
   0xa3: { name: 'LOG', fee: 375, isAsync: false },
   0xa4: { name: 'LOG', fee: 375, isAsync: false },
 
+  // '0xb0' range - subroutines
+  // Temporary Placement pending Berlin Hardfork updates
+  0xb2: { name: 'BEGINSUB', fee: 2, isAsync: false },
+  0xb3: { name: 'JUMPSUB', fee: 8, isAsync: false },
+  0xb7: { name: 'RETURNSUB', fee: 3, isAsync: false },
+
   // '0xf0' range - closures
   0xf0: { name: 'CREATE', fee: 32000, isAsync: true },
   0xf1: { name: 'CALL', fee: 700, isAsync: true },
