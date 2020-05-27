@@ -567,18 +567,18 @@ export const handlers: { [k: string]: OpHandler } = {
   },
   JUMPDEST: function (runState: RunState) {},
   BEGINSUB: function (runState: RunState) {
-    trap(ERROR.INVALID_SUBROUTINE_ENTRY + ' at ' + describeLocation(runState))
+    trap(ERROR.INVALID_BEGINSUB + ' at ' + describeLocation(runState))
   },
   JUMPSUB: function (runState: RunState) {
     const dest = runState.stack.pop()
     if (dest.gt(runState.eei.getCodeSize())) {
-      trap(ERROR.INVALID_JUMP + ' at ' + describeLocation(runState))
+      trap(ERROR.INVALID_JUMPSUB + ' at ' + describeLocation(runState))
     }
 
     const destNum = dest.toNumber()
 
-    if (!jumpIsValid(runState, destNum)) {
-      trap(ERROR.INVALID_JUMP + ' at ' + describeLocation(runState))
+    if (!jumpSubIsValid(runState, destNum)) {
+      trap(ERROR.INVALID_JUMPSUB + ' at ' + describeLocation(runState))
     }
 
     runState.returnStack.push(new BN(runState.programCounter))
@@ -586,7 +586,7 @@ export const handlers: { [k: string]: OpHandler } = {
   },
   RETURNSUB: function (runState: RunState) {
     if (runState.returnStack.length < 1) {
-      trap(ERROR.INVALID_SUBROUTINE_RETURN)
+      trap(ERROR.INVALID_RETURNSUB)
     }
 
     const dest = runState.returnStack.pop()
@@ -920,6 +920,11 @@ function getDataSlice(data: Buffer, offset: BN, length: BN): Buffer {
 // checks if a jump is valid given a destination
 function jumpIsValid(runState: RunState, dest: number): boolean {
   return runState.validJumps.indexOf(dest) !== -1
+}
+
+// checks if a jumpsub is valid given a destination
+function jumpSubIsValid(runState: RunState, dest: number): boolean {
+  return runState.validJumpSubs.indexOf(dest) !== -1
 }
 
 function maxCallGas(gasLimit: BN, gasLeft: BN): BN {
