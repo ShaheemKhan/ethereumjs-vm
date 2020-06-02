@@ -109,6 +109,9 @@ const opcodes: OpcodeList = createOpcodes({
   0x59: { name: 'MSIZE', fee: 2, isAsync: false },
   0x5a: { name: 'GAS', fee: 2, isAsync: false },
   0x5b: { name: 'JUMPDEST', fee: 1, isAsync: false },
+  0x5c: { name: 'BEGINSUB', fee: 2, isAsync: false },
+  0x5d: { name: 'RETURNSUB', fee: 5, isAsync: false },
+  0x5e: { name: 'JUMPSUB', fee: 10, isAsync: false },
 
   // 0x60, range
   0x60: { name: 'PUSH', fee: 3, isAsync: false },
@@ -183,12 +186,6 @@ const opcodes: OpcodeList = createOpcodes({
   0xa2: { name: 'LOG', fee: 375, isAsync: false },
   0xa3: { name: 'LOG', fee: 375, isAsync: false },
   0xa4: { name: 'LOG', fee: 375, isAsync: false },
-
-  // '0xb0' range - subroutines
-  // Temporary Placement pending Berlin Hardfork updates
-  0xb2: { name: 'BEGINSUB', fee: 1, isAsync: false },
-  0xb3: { name: 'JUMPSUB', fee: 8, isAsync: false },
-  0xb7: { name: 'RETURNSUB', fee: 2, isAsync: false },
 
   // '0xf0' range - closures
   0xf0: { name: 'CREATE', fee: 32000, isAsync: true },
